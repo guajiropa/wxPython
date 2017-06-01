@@ -34,8 +34,6 @@ class simpleTextFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
         self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
 
-
-
         self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         """
         self.buttons = []
