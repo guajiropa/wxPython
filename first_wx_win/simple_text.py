@@ -9,25 +9,24 @@
 #                   platform windows application.
 #
 """
-# Import the needed modules
+# Import the needed modules.
 import wx
 import os
 import sys
 
 
 class simpleTextFrame(wx.Frame):
-    """ This is the Main window that is the heart of this application
+    """ This is the Main window that is the main
+        GUI widget of this application.
     """
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(450, 250))
-
         # Setup values for instance variables
         self.current_file = None
         self.current_dir = None
         self.title = title
         self.text_control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
         self.CreateStatusBar()
-
         # Setup the filemenu menu
         filemenu = wx.Menu()
         menuOpen = filemenu.Append(wx.ID_OPEN, "&Open",
@@ -38,20 +37,17 @@ class simpleTextFrame(wx.Frame):
                                     "Information about this program")
         menuExit = filemenu.Append(wx.ID_EXIT, "E&xit",
                                    "Terminate the program")
-
         # Create the menubar.
         menuBar = wx.MenuBar()
         menuBar.Append(filemenu, "&File")
         # Add the meunbar to the frame content.
         self.SetMenuBar(menuBar)
-
         # Setup an event handlers for the 'onclick' event on
         # the menu items.
         self.Bind(wx.EVT_MENU, self.OnOpen, menuOpen)
         self.Bind(wx.EVT_MENU, self.OnSave, menuSave)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
         self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
-
         # Use some sizers to see layout options.
         self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer = wx.BoxSizer(wx.VERTICAL)
@@ -59,7 +55,6 @@ class simpleTextFrame(wx.Frame):
         self.sizer.Add(self.sizer2, 0, wx.EXPAND)
         self.SetSizer(self.sizer)
         self.SetAutoLayout(1)
-
         # Window frame is all set, now Show() it!
         self.Show()
 
@@ -130,7 +125,6 @@ class simpleTextFrame(wx.Frame):
             # If the end user selects the 'Cancel'
             # button, then return without saving
             return
-
         # Dispose of the dialog.
         dlg.Destroy()
 
