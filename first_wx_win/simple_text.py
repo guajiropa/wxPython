@@ -37,6 +37,9 @@ class simpleTextFrame(wx.Frame):
                                     "Information about this program")
         menuExit = filemenu.Append(wx.ID_EXIT, "E&xit",
                                    "Terminate the program")
+        # Setup the view menu
+        viewmenu = wx.Menu()
+        # menuFont = viewmenu.Append(wx.ID_SELECT_FONT, )
         # Create the menubar.
         menuBar = wx.MenuBar()
         menuBar.Append(filemenu, "&File")
