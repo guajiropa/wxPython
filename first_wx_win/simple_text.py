@@ -104,7 +104,7 @@ class simpleTextFrame(wx.Frame):
         dlg = wx.FileDialog(self, "Save File", self.current_dir, self.current_file,
                             "All Files|*.*", wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
         # Show the fileDialog in modal and let the user decide
-        # what to do with the file contets loaded in the wxFileCtrl
+        # what to do with the file contents loaded in the wxFileCtrl
         if dlg.ShowModal() == wx.ID_OK:
             # If the user presses the OK button, then get the
             # contents from the wx.TextCtrl.
@@ -123,7 +123,7 @@ class simpleTextFrame(wx.Frame):
             filehandle.close()
         else:
             # If the end user selects the 'Cancel'
-            # button, then return without saving
+            # button, then return without saving.
             return
         # Dispose of the dialog.
         dlg.Destroy()
