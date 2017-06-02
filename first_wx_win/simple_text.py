@@ -79,7 +79,6 @@ class simpleTextFrame(wx.Frame):
     def OnOpen(self, e):
         """ Open a file.
         """
-        #self.title = title + '\"' + join(self.current_dir, self.current_file) + '\"'
         dlg = wx.FileDialog(self, "Open a file", ".", "", "All Files|*.*",
                             wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 
@@ -94,8 +93,10 @@ class simpleTextFrame(wx.Frame):
         dlg.Destroy()
 
     def OnSave(self, e):
-        """ Save the current text loaded in
-            the wxTextCtrl named 'text_control'.
+        """ Save the current text loaded in the wxTextCtrl
+             named 'text_control'. Check to see if exists
+             and prompt for the ok to overwrite the exsisting
+             file.
         """
         dlg = wx.FileDialog(self, "Save File", self.current_dir, self.current_file,
                             "All Files|*.*", wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
