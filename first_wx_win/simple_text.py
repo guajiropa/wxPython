@@ -11,12 +11,16 @@ class simpleTextFrame(wx.Frame):
         wx.Frame.__init__(self, parent, title=title, size=(450, 250))
 
         self.current_file = None
+        self.current_dir = None
         self.text_control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
         self.CreateStatusBar()
 
         # Setup the filemenu menu
         filemenu = wx.Menu()
-        menuOpen = filemenu.Append(wx.ID_OPEN, "&Open", "Open a file to edit")
+        menuOpen = filemenu.Append(wx.ID_OPEN, "&Open",
+                                   "Open a file to edit")
+        menuSave = filemenu.Append(wx.ID_SAVE, "&Save",
+                                   "Save changes to the current file")
         menuAbout = filemenu.Append(wx.ID_ABOUT, "&About",
                                     "Information about this program")
         menuExit = filemenu.Append(wx.ID_EXIT, "E&xit",
@@ -31,6 +35,7 @@ class simpleTextFrame(wx.Frame):
         # Setup an event handlers for the 'onclick' event on
         # the menu items.
         self.Bind(wx.EVT_MENU, self.OnOpen, menuOpen)
+        self.Bind(wx.EVT_MENU, self.OnSave, menuSave)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
         self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
 
@@ -75,8 +80,28 @@ class simpleTextFrame(wx.Frame):
 
         filehandle = open(dlg.GetPath(), 'r')
         self.text_control.SetValue(filehandle.read())
-        self.current_file = filehandle.name
+        self.current_file = dlg.Filename
+        self.current_dir = dlg.Directory
         filehandle.close()
+        dlg.Destroy()
+
+    def OnSave(self, e):
+        """ Save the current text loaded in
+            the wxTextCtrl named 'text_control'.
+        """
+
+        dlg = wx.FileDialog(self, "Save File", self.current_dir, self.current_file,
+                            "All Files|*.*", wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
+
+        if dlg.ShowModal() == wx.ID_OK:
+            file_contents = self.text_control.GetValue()
+            self.current_file = dlg.GetFilename()
+            self.current_dir = dlg.GetDirectory()
+            filehandle = open(os.path.join(self.current_dir, self.current_file), 'w')
+            filehandle.write(file_contents)
+            filehandle.close()
+
+        # Dispose of the dialog.
         dlg.Destroy()
 
 
