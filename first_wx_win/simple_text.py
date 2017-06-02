@@ -79,18 +79,25 @@ class simpleTextFrame(wx.Frame):
     def OnOpen(self, e):
         """ Open a file.
         """
+        # Setup th wx.FileDialog widget.
         dlg = wx.FileDialog(self, "Open a file", ".", "", "All Files|*.*",
                             wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
-
+        # Show the current dialog as Modal and handle the
+        # event if the user presses the cancel button.
         if dlg.ShowModal() == wx.ID_CANCEL:
             return
-
-        filehandle = open(dlg.GetPath(), 'r')
-        self.text_control.SetValue(filehandle.read())
-        self.current_file = dlg.Filename
-        self.current_dir = dlg.Directory
-        filehandle.close()
-        dlg.Destroy()
+        else:
+            # Open the file to be read.
+            filehandle = open(dlg.GetPath(), 'r')
+            # Load the text from the file into the wx.TextCtrl.
+            self.text_control.SetValue(filehandle.read())
+            # Save the current filename and location.
+            self.current_file = dlg.Filename
+            self.current_dir = dlg.Directory
+            # Close the file.
+            filehandle.close()
+            # Destroy the dialog box.
+            dlg.Destroy()
 
     def OnSave(self, e):
         """ Save the current text loaded in the wxTextCtrl
@@ -98,26 +105,44 @@ class simpleTextFrame(wx.Frame):
              and prompt for the ok to overwrite the exsisting
              file.
         """
+        # Setup th wx.FileDialog widget.
         dlg = wx.FileDialog(self, "Save File", self.current_dir, self.current_file,
                             "All Files|*.*", wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
-
+        # Show the fileDialog in modal and let the user decide
+        # what to do with the file contets loaded in the wxFileCtrl
         if dlg.ShowModal() == wx.ID_OK:
+            # If the user presses the OK button, then get the
+            # contents from the wx.TextCtrl.
             file_contents = self.text_control.GetValue()
+            # Get the current file name and store it int the
+            # instance variable.
             self.current_file = dlg.GetFilename()
+            # Get the current directory and store it int the
+            # instance variable.
             self.current_dir = dlg.GetDirectory()
+            # Open the file to write the contents to.
             filehandle = open(os.path.join(self.current_dir, self.current_file), 'w')
+            # Write the contents to the file.
             filehandle.write(file_contents)
+            # Close the file.
             filehandle.close()
+        else:
+            # If the end user selects the 'Cancel'
+            # button, then return without saving
+            return
 
         # Dispose of the dialog.
         dlg.Destroy()
 
 
 def main():
+    # Create an instance of the application.
     app = wx.App(False)
-
+    # Create an instance of the window and pass in
+    # the title to display in the caption bar.
     frame = simpleTextFrame(None, 'Tiny Editor')
-    app.MainLoop()
+    # Start the mainloop that drives the application
+    sys.exit(app.MainLoop())
 
 if __name__ == '__main__':
     main()
