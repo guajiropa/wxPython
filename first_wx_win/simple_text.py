@@ -1,12 +1,23 @@
+"""
+#
+#   AUTHOR      :   Robert James Patterson
+#   DATE        :   05/29/2017
+#   UPDATED     :   06/02/2017
+#   FILENAME    :   simple_text.py
+#   SYNOPSIS    :   A simple text editor created for the sole purpose of figuring
+#                   wxPython 4.0 (Phoenix) features by constructing a simple cross
+#                   platform windows application.
+#
+"""
+# Import the needed modules
 import wx
-
-import sys
 import os
+import sys
 
 
 class simpleTextFrame(wx.Frame):
-    # Create our frame from the 'wx.Frame' class
-
+    """ This is the Main window that is the heart of this application
+    """
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(450, 250))
 
@@ -89,7 +100,6 @@ class simpleTextFrame(wx.Frame):
         """ Save the current text loaded in
             the wxTextCtrl named 'text_control'.
         """
-
         dlg = wx.FileDialog(self, "Save File", self.current_dir, self.current_file,
                             "All Files|*.*", wx.FD_SAVE | wx.FD_OVERWRITE_PROMPT)
 
