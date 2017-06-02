@@ -21,8 +21,10 @@ class simpleTextFrame(wx.Frame):
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(450, 250))
 
+        # Setup values for instance variables
         self.current_file = None
         self.current_dir = None
+        self.title = title
         self.text_control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
         self.CreateStatusBar()
 
@@ -50,39 +52,34 @@ class simpleTextFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
         self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
 
-        self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
-        """
-        self.buttons = []
-        
-        for i in range(0, 6):
-            self.buttons.append (wx.Button(self, -1, "Button &"+str(i)))
-            self.sizer2.Add(self.buttons[i], 1, wx.EXPAND)
-        """
         # Use some sizers to see layout options.
+        self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer = wx.BoxSizer(wx.VERTICAL)
         self.sizer.Add(self.text_control, 1, wx.EXPAND)
         self.sizer.Add(self.sizer2, 0, wx.EXPAND)
-
-        # Layout sizers
         self.SetSizer(self.sizer)
         self.SetAutoLayout(1)
-        # self.sizer.Fit(self)
 
+        # Window frame is all set, now Show() it!
         self.Show()
 
     def OnAbout(self, e):
-        # A message dialog box with a 'wx.OK' button
+        """ Display the 'About' dialog.
+        """
         dlg = wx.MessageDialog(self, "A small text editor.",
                                "About Simple Editor", wx.OK)
         dlg.ShowModal()
         dlg.Destroy()
 
     def OnExit(self, e):
+        """ Exit the application.
+        """
         self.Close(True)
 
     def OnOpen(self, e):
         """ Open a file.
         """
+        #self.title = title + '\"' + join(self.current_dir, self.current_file) + '\"'
         dlg = wx.FileDialog(self, "Open a file", ".", "", "All Files|*.*",
                             wx.FD_OPEN | wx.FD_FILE_MUST_EXIST)
 
