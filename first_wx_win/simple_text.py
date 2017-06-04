@@ -6,7 +6,7 @@
 #   FILENAME    :   simple_text.py
 #   SYNOPSIS    :   A simple text editor created for the sole purpose of figuring
 #                   wxPython 4.0 (Phoenix) features by constructing a simple cross
-#                   platform windows application.
+#                   platform windowed application.
 #
 """
 # Import the needed modules.
