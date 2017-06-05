@@ -11,8 +11,10 @@
 """
 # Import the needed modules.
 import wx
+import wx.lib
 import os
 import sys
+import tinytext_rc
 
 
 class simpleTextFrame(wx.Frame):
@@ -21,28 +23,40 @@ class simpleTextFrame(wx.Frame):
     """
     def __init__(self, parent, title):
         wx.Frame.__init__(self, parent, title=title, size=(450, 250))
+
         # Setup values for instance variables
         self.current_file = None
         self.current_dir = None
         self.title = title
+
+        # Setup the icon for the main window
+        ico = tinytext_rc.PyEmbeddedImage.GetIcon(tinytext_rc.syf_bear)
+        self.SetIcon(ico)
+
+        #
         self.text_control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
         self.CreateStatusBar()
+
         # Setup the filemenu menu
         filemenu = wx.Menu()
         menuOpen = filemenu.Append(wx.ID_OPEN, "&Open",
                                    "Open a file to edit")
         menuSave = filemenu.Append(wx.ID_SAVE, "&Save",
                                    "Save changes to the current file")
-        menuAbout = filemenu.Append(wx.ID_ABOUT, "&About",
-                                    "Information about this program")
         menuExit = filemenu.Append(wx.ID_EXIT, "E&xit",
                                    "Terminate the program")
         # Setup the view menu
         viewmenu = wx.Menu()
         # menuFont = viewmenu.Append(wx.ID_SELECT_FONT, )
+
+        helpmenu = wx.Menu()
+        menuAbout = helpmenu.Append(wx.ID_ABOUT, "&About",
+                                    "Information about this program")
         # Create the menubar.
         menuBar = wx.MenuBar()
         menuBar.Append(filemenu, "&File")
+        menuBar.Append(viewmenu, "&View")
+        menuBar.Append(helpmenu, "&Help")
         # Add the meunbar to the frame content.
         self.SetMenuBar(menuBar)
         # Setup an event handlers for the 'onclick' event on
@@ -51,6 +65,7 @@ class simpleTextFrame(wx.Frame):
         self.Bind(wx.EVT_MENU, self.OnSave, menuSave)
         self.Bind(wx.EVT_MENU, self.OnAbout, menuAbout)
         self.Bind(wx.EVT_MENU, self.OnExit, menuExit)
+
         # Use some sizers to see layout options.
         self.sizer2 = wx.BoxSizer(wx.HORIZONTAL)
         self.sizer = wx.BoxSizer(wx.VERTICAL)
@@ -58,7 +73,9 @@ class simpleTextFrame(wx.Frame):
         self.sizer.Add(self.sizer2, 0, wx.EXPAND)
         self.SetSizer(self.sizer)
         self.SetAutoLayout(1)
+
         # Window frame is all set, now Show() it!
+        self.Center()
         self.Show()
 
     def OnAbout(self, e):
@@ -133,11 +150,14 @@ class simpleTextFrame(wx.Frame):
 
 
 def main():
+
     # Create an instance of the application.
     app = wx.App(False)
+
     # Create an instance of the window and pass in
     # the title to display in the caption bar.
-    frame = simpleTextFrame(None, 'Tiny Editor')
+    frame = simpleTextFrame(None, 'Tiny-Text Editor')
+
     # Start the mainloop that drives the application
     sys.exit(app.MainLoop())
 
